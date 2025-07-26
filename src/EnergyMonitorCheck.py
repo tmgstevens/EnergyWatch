@@ -52,7 +52,7 @@ class EnergyMonitor:
         """Get electricity consumption data from Octopus API"""
         try:
             # Calculate time range
-            end_date = datetime.today() - timedelta(hours=24*7)
+            end_date = datetime.today() - timedelta(hours=24)
             end_time =  datetime(end_date.year, end_date.month, end_date.day)
             #end_time = datetime(2025,4,24)
             start_time = end_time - timedelta(hours=hours_back)
@@ -158,11 +158,11 @@ class EnergyMonitor:
             )
 
             # Send SMS
-            #self.twilio_client.messages.create(
-            #    body=message,
-            #    from_=self.twilio_from,
-            #    to=self.twilio_to
-            #)
+            self.twilio_client.messages.create(
+                body=message,
+                from_=self.twilio_from,
+                to=self.twilio_to
+            )
 
             self.last_alert_time = current_time
             logger.info(f"Alert sent successfully: {analysis['average_power_kw']}kW usage detected")
